@@ -9,14 +9,13 @@ class CoursePage extends React.Component
         title : ''
       }
     };
-    this.handleChange = this.handleChange.bind(this);
   }   
   
-  handleChange(e){	  
+  handleChange = (e) => {
     const course = {...this.state.course, title : e.target.value};    
     this.setState({course}); 
     console.log(this.state.course);
-  }
+  };
   
   render(){
     return (
