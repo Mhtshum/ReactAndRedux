@@ -22,6 +22,7 @@ class CoursePage extends React.Component
   handleChange(e){	  
     const course = {...this.state.course, title : e.target.value};    
     this.setState({course}); 
+    console.log(this.state.course);
   }
   
   render(){
@@ -31,7 +32,7 @@ class CoursePage extends React.Component
       <form>
         <h2>Courses</h2>
         <h3>Add course</h3>
-        <input type='text' onChange={this.handleChange} text={this.state.course.title} />
+        <input type='text' onChange={this.handleChange.bind(this)} text={this.state.course.title} />
         <input type='button' value='Save'/>
       </form>);    
   }
