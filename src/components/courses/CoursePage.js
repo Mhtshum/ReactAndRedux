@@ -18,7 +18,7 @@ class CoursePage extends React.Component
   };
   
   render(){
-    //commented syntax is avoiding us state undefined object error and setting context correctly for current object but it this fn. will be renderer each time for render method
+    //commented syntax is avoiding us state undefined object error and setting context correctly for current object but it this new fn. will be credated each time for render method
     //<input type='text' onChange={this.handleChange.bind(this)} text={this.
     return (
       <form>
