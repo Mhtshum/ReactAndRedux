@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createCourse } from '../../redux/actions/courseActions';
+import * as courseActions from '../../redux/actions/courseActions';
 import Proptypes from 'prop-types';
 
 class CoursePage extends React.Component
@@ -19,18 +19,18 @@ class CoursePage extends React.Component
    
   handleSubmit = e => {	  
     e.preventDefault();
-    alert(this.state.course.title);
-    this.props.dispatch(createCourse(this.state.course));
+    //alert(this.state.course.title);
+    this.props.createCourse(this.state.course);
   };  
   
   render(){
-    //onsbumit on form enable enter key also submit while on button only clicking on button and also not recommended for accessibility 
+    //onsbumit on form enable enter key also submit while on button only clicking on button and also not recommended for accessibility mean while if button is used then type should be submit
     return (
       <form onSubmit={this.handleSubmit}>
         <h2>Courses</h2>
         <h3>Add course</h3>
         <input type='text' onChange={this.handleChange} text={this.state.course.title} />
-        <input type='button' value='Save'/>
+        <input type='submit' value='Save'/>
         { this.props.courses.map(c=>
           <div key={c.title}>{c.title}</div>
         )}
@@ -39,11 +39,18 @@ class CoursePage extends React.Component
 }
 
 CoursePage.proptypes = {
-  dispatch:Proptypes.func.isRequired,
+  createCourse:Proptypes.func.isRequired,
   course:Proptypes.array.isRequired
 };
 
 function mapsStateToProps(state){
   return { courses : state.courses};	
 }
-export default connect(mapsStateToProps)(CoursePage);
+
+function mapDispatchToProps(dispatch){
+  return {
+    createCourse : course => dispatch(courseActions.createCourse(course))	  
+  };	
+}
+
+export default connect(mapsStateToProps,mapDispatchToProps)(CoursePage);
