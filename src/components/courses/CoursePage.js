@@ -44,8 +44,8 @@ CoursePage.proptypes = {
   course:Proptypes.array.isRequired
 };
 
-function mapsStateToProps({courses}){
-  return { courses };	
+function mapsStateToProps(state){
+  return { courses : state.courses};	
 }
 
 function mapDispatchToProps(dispatch){

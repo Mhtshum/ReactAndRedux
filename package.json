@@ -2,7 +2,10 @@
   "name": "react-redux",
   "description": "React and Redux",
   "scripts": { 
-	"start" : "webpack-dev-server --host 11.11.11.5 --config webpack.config.dev.js --port 8080"
+    "start" : "run-p start:dev start:api",
+	"start:dev" : "webpack-dev-server --host 11.11.11.5 --config webpack.config.dev.js --port 8080",
+	"prestart:api" : "node tools/createMockDb.js",
+	"start:api" : "node tools/apiServer.js"
   },
   "dependencies": {
     "bootstrap": "4.3.1",

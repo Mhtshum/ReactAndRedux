@@ -22,7 +22,8 @@ module.exports = {
 		headers: {'Access-Control-Allow-Origin':'*'},
 		https: false
 	},
-	plugins :[ 
+	plugins :[
+		new webpack.DefinePlugin({"process.env.API_URL":"http://localhost:3001"}),
 		new htmlWebpackPlugin({
 			template: './src/index.html',
 			favicon: './src/favicon.ico'
