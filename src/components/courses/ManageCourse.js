@@ -4,7 +4,7 @@ import {loadCourses} from '../../redux/actions/courseActions';
 import {loadAuthors} from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
 
-function ManageCourse ({courses, authors, loadAuthors, loadCourses}) { 
+const ManageCourse = ({courses, authors, loadAuthors, loadCourses}) => { 
   useEffect(()=> {    
     if(courses.length ===0) {
       loadCourses()
@@ -21,7 +21,7 @@ function ManageCourse ({courses, authors, loadAuthors, loadCourses}) {
       <h2>Manage Courses</h2>
     </>
   );      
-}
+};
 
 ManageCourse.propTypes = {
   courses:PropTypes.array.isRequired,
