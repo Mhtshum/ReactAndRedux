@@ -25,10 +25,10 @@ class CoursePage extends React.Component
    
   handleSubmit = e => {	  
     e.preventDefault();
-    //alert(this.state.course.title);
+    /*alert(this.state.course.title);
     const course = {...this.state.course, id : this.props.courses.length+1};
     this.setState({course}); 	
-    this.props.actions.courseActions.createCourse(this.state.course);
+    this.props.actions.courseActions.createCourse(this.state.course);*/
   };  
   
   componentDidMount(){

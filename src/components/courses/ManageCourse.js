@@ -1,10 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import {loadCourses} from '../../redux/actions/courseActions';
+import {loadCourses, saveCourse} from '../../redux/actions/courseActions';
 import {loadAuthors} from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
+import CourseForm from './CourseForm';
+import { newCourse } from '../../../tools/mockData';
 
-const ManageCourse = ({courses, authors, loadAuthors, loadCourses}) => { 
+const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCourse, ...props}) => { 
+  const [ course, setCourse ] = useState({...props.course});  
+  const [ errors ] = useState({});  
   useEffect(()=> {    
     if(courses.length ===0) {
       loadCourses()
@@ -16,14 +20,28 @@ const ManageCourse = ({courses, authors, loadAuthors, loadCourses}) => {
     }  
   }, []);  
   
+  const saveChanges = (e) => {
+    e.preventDefault();
+    saveCourse(course)
+      .catch(err=> alert('Error in saving course ' + err));
+  };
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    // below method can not access name & value if it has not been destructure as on above line
+    setCourse( prevCourse => ({
+      ...prevCourse, 
+      [name] : name === 'authorId' ? parseInt(value, 10) : value
+    }));
+  };
+  
   return (
-    <> 
-      <h2>Manage Courses</h2>
-    </>
+    <CourseForm onChange={handleChange} course={course} errors={errors} authors={authors} onSave={saveChanges} />
   );      
 };
 
 ManageCourse.propTypes = {
+  course:PropTypes.object.isRequired,
   courses:PropTypes.array.isRequired,
   authors:PropTypes.array.isRequired,
   loadCourses: PropTypes.func.isRequired,
@@ -33,13 +51,15 @@ ManageCourse.propTypes = {
 function mapsStateToProps(state){
   return { 
     courses : state.courses, 
-    authors : state.authors
+    authors : state.authors,
+    course: newCourse
   };    
 }
 
 // this could be confusion below thus we can use * courseActions & authorActions b/c loadCourses & loadAuthors are same, these bound or passed actions would be available via props inside the ManageCourse component not those available via import 
 const mapDispatchToProps = {
   loadCourses,
+  saveCourse,
   loadAuthors     
 };
 
