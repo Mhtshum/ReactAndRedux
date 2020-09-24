@@ -1,5 +1,6 @@
 import * as courseApi from '../../api/courseApi';
 import { courseActionsTypes } from './actionTypes';
+import apiCallBegin from './apiCallsActions';
 
 const createCourse = (course) => {
   return {type: courseActionsTypes.CREATE_COURSE,course};
@@ -19,6 +20,7 @@ const loadCoursesSuccess = (courses) => {
 
 const loadCourses = () => {
   return (dispatch) => {
+    dispatch(apiCallBegin());
     return courseApi.getCourses()
       .then( courses =>	dispatch(loadCoursesSuccess(courses)))
       .catch( error => { 
@@ -30,6 +32,7 @@ const loadCourses = () => {
 const saveCourse = (course) => {
   // args are dispatch, getState. to access store and to pass it to thunk 
   return (dispatch) => {
+    dispatch(apiCallBegin());
     return courseApi.saveCourse(course)
       .then( (savedCourse) =>	
         course.id 

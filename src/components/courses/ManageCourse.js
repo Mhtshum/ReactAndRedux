@@ -5,24 +5,39 @@ import {loadAuthors} from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
 import CourseForm from './CourseForm';
 import { newCourse } from '../../../tools/mockData';
+import Spinner from '../common/Spinner';
+import { toast } from 'react-toastify';
 
-const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCourse, ...props}) => { 
+const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCourse, history, ...props}) => { 
   const [ course, setCourse ] = useState({...props.course});  
+  const [ saving, setSaving ] = useState(false);    
   const [ errors ] = useState({});  
+  
+  //when props changes we need to update our state it is running only once when component mount 
   useEffect(()=> {    
     if(courses.length ===0) {
       loadCourses()
         .catch(err=> alert(' Error in loading course '+err)); 
     }
-    if(authors.length ===0) {   
+    else {
+      // this will copy course passed in on props to state anytime new course is passed in
+      setCourse({...props.course});
+    }
+    if(authors.length === 0) {   
       loadAuthors()
         .catch(err=> alert(' Error in loading author '+err));   
     }  
-  }, []);  
+  }, [props.course]);  
   
   const saveChanges = (e) => {
     e.preventDefault();
+    setSaving({ saving : true });
     saveCourse(course)
+      .then(() => {
+        //setSaving({ saving : false });
+        toast.success('Course saved successfully');
+        history.push('/courses');
+      })
       .catch(err=> alert('Error in saving course ' + err));
   };
   
@@ -31,12 +46,16 @@ const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCourse, .
     // below method can not access name & value if it has not been destructure as on above line
     setCourse( prevCourse => ({
       ...prevCourse, 
+      // following will set both properties based on input names for authorId & category
       [name] : name === 'authorId' ? parseInt(value, 10) : value
     }));
   };
   
   return (
-    <CourseForm onChange={handleChange} course={course} errors={errors} authors={authors} onSave={saveChanges} />
+    authors.length === 0 || courses.length === 0
+      ? <Spinner /> 
+      : <CourseForm onChange={handleChange} course={course} errors={errors} authors={authors} saving={saving} onSave={saveChanges} />
+    
   );      
 };
 
@@ -45,14 +64,21 @@ ManageCourse.propTypes = {
   courses:PropTypes.array.isRequired,
   authors:PropTypes.array.isRequired,
   loadCourses: PropTypes.func.isRequired,
-  loadAuthors: PropTypes.func.isRequired
+  loadAuthors: PropTypes.func.isRequired,
+  history: PropTypes.object
 };
 
-function mapsStateToProps(state){
+function getCourseBySlug( courses, slug){
+  return courses.find(c => c.slug === slug) || null ;
+}
+
+function mapsStateToProps(state, ownProps){  
+  const slug = ownProps.match.params.slug;  
+  const displayCourse = slug && state.courses.length > 0 ? getCourseBySlug(state.courses,slug) : newCourse;
   return { 
     courses : state.courses, 
     authors : state.authors,
-    course: newCourse
+    course: displayCourse
   };    
 }
 

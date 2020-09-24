@@ -1,6 +1,7 @@
 const initialData = {
   courses : [],
-  authors : []
+  authors : [],
+  apiCallsInProgress : 0
 };
 
 export default initialData;
