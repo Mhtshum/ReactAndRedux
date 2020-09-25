@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCourse, history, ...props}) => { 
   const [ course, setCourse ] = useState({...props.course});  
   const [ saving, setSaving ] = useState(false);    
-  const [ errors ] = useState({});  
+  const [ errors, setErrors ] = useState({});  
   
   //when props changes we need to update our state it is running only once when component mount 
   useEffect(()=> {    
@@ -31,14 +31,16 @@ const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCourse, h
   
   const saveChanges = (e) => {
     e.preventDefault();
-    setSaving({ saving : true });
+    setSaving(true);
     saveCourse(course)
       .then(() => {
-        //setSaving({ saving : false });
         toast.success('Course saved successfully');
         history.push('/courses');
       })
-      .catch(err=> alert('Error in saving course ' + err));
+      .catch(err => {
+        setSaving(false);
+        setErrors({ onSave : err.message }); 
+      });
   };
   
   const handleChange = (e) => {
