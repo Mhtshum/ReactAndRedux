@@ -1,7 +1,10 @@
-import { BEGIN_API_CALL } from './actionTypes';
+import { BEGIN_API_CALL, API_CALL_ERROR } from './actionTypes';
 
-const apiCallBegin = () => {
+export const apiCallBegin = () => {
   return {type: BEGIN_API_CALL};
 };
 
-export default apiCallBegin;
+
+export const apiCallFails = () => {
+  return {type: API_CALL_ERROR};
+};

@@ -31,6 +31,7 @@ const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCourse, h
   
   const saveChanges = (e) => {
     e.preventDefault();
+    if(!isCourseValid()) { return; }
     setSaving(true);
     saveCourse(course)
       .then(() => {
@@ -41,6 +42,16 @@ const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCourse, h
         setSaving(false);
         setErrors({ onSave : err.message }); 
       });
+  };
+  
+  const isCourseValid = () => {
+    const { title, authorId, category } = course;
+    let errors = {};
+    if (!title) { errors.title = 'Title is required'; }
+    if (!authorId) { errors.author = 'Author is required'; }
+    if (!category) { errors.category = 'Category is required'; }
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
   };
   
   const handleChange = (e) => {
