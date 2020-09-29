@@ -2,6 +2,5 @@
 .gitignore
 README.md
 LICENSE
-*.snap
-**\__snapshots__*\*
+
 exclude-list.txt
