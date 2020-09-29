@@ -7,36 +7,38 @@ import {bindActionCreators} from 'redux';
 import CourseList from './CourseList';
 import Spinner from '../common/Spinner';
 import { Redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 class CoursePage extends React.Component
 {
   state = {
     redirectToAddCoursePage : false
   };     
+     
+  deleteCourse = (c) => {
+    toast.success('Course deleted!');
+    this.props.actions.courseActions
+      .deleteCourse(c)
+      .catch((e)=>{
+        toast.error('Course deletion failed: ' + e.message, {autoClose: false});
+        this.refreshCourses();
+      });
+  };
   
-  handleChange = e => {
-    const course = {...this.state.course, title : e.target.value};    
-    this.setState({course}); 
-    //console.log(this.state.course);
+  refreshCourses = () => {    
+    this.props.actions.courseActions.loadCourses()
+      .catch((e)=>
+        toast.error(' Error in loading course : ' + e.message, {autoClose: false})); 
   };
    
-  handleSubmit = e => {	  
-    e.preventDefault();
-    /*alert(this.state.course.title);
-    const course = {...this.state.course, id : this.props.courses.length+1};
-    this.setState({course}); 	
-    this.props.actions.courseActions.createCourse(this.state.course);*/
-  };  
-  
   componentDidMount(){
     const { actions, courses, authors } = this.props;
     
     if(courses.length ===0) {
-      actions.courseActions.loadCourses()
-        .catch(err=> alert(' Error in loading course '+err)); 
+      this.refreshCourses();
     }
     if(authors.length ===0) {	
-      this.props.actions.loadAuthors()
+      actions.loadAuthors()
         .catch(err=> alert(' Error in loading author '+err));   
     }  
   }  
@@ -55,7 +57,7 @@ class CoursePage extends React.Component
               style={{marginBottom : 20 }} 
               className="btn btn-primary add-course" 
               onClick={() => this.setState({ redirectToAddCoursePage : true })}>Add Course</button>
-            <CourseList courses={this.props.courses} />
+            <CourseList courses={this.props.courses} onDelete={this.deleteCourse} />
           </>
         }
       </>

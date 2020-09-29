@@ -10,6 +10,8 @@ export default function courseReducer(state = initialData.courses, action){
       return state.map(c=> c.id === action.course.id ? action.course : c);
     case courseActionsTypes.LOAD_COURSES_SUCCESS:
       return action.courses;
+    case courseActionsTypes.DELETE_COURSE_OPTIMISTIC:
+      return state.filter(c=> c.id !== action.course.id);      
     default:
       return state;
   }

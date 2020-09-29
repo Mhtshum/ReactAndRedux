@@ -18,6 +18,10 @@ const loadCoursesSuccess = (courses) => {
   return { type: courseActionsTypes.LOAD_COURSES_SUCCESS, courses};	
 };
 
+function deleteCourseOptimistic(course){
+  return { type: courseActionsTypes.DELETE_COURSE_OPTIMISTIC, course};
+}
+
 const loadCourses = () => {
   return (dispatch) => {
     dispatch(apiCallBegin());
@@ -46,4 +50,12 @@ const saveCourse = (course) => {
   };
 };
 
-export { createCourse, loadCoursesSuccess, loadCourses, saveCourse };
+function deleteCourse(course){
+  return (dispatch) => {
+    dispatch(deleteCourseOptimistic(course));
+    // this optimistic it is good to unhandle error
+    return courseApi.deleteCourse(course.id);
+  };  
+}
+
+export { createCourse, loadCoursesSuccess, loadCourses, saveCourse, deleteCourse };

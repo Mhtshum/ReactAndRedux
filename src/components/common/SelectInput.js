@@ -40,13 +40,13 @@ const SelectInput = ({
 };
 
 SelectInput.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  error: PropTypes.object,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  error: PropTypes.string,
+  defaultOption: PropTypes.string,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  defaultOption: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.object)
+  onChange: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.object),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default SelectInput;
