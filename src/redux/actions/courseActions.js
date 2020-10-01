@@ -6,7 +6,7 @@ const createCourse = (course) => {
   return {type: courseActionsTypes.CREATE_COURSE,course};
 };
 
-const saveCourseSuccess = (course) => {
+export const saveCourseSuccess = (course) => {
   return {type: courseActionsTypes.CREATE_COURSE_SUCCESS, course};
 };
 
