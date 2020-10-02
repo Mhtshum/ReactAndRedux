@@ -2,15 +2,11 @@ import * as courseApi from '../../api/courseApi';
 import { courseActionsTypes } from './actionTypes';
 import { apiCallBegin, apiCallFails } from './apiCallsActions';
 
-const createCourse = (course) => {
-  return {type: courseActionsTypes.CREATE_COURSE,course};
-};
-
 export const saveCourseSuccess = (course) => {
   return {type: courseActionsTypes.CREATE_COURSE_SUCCESS, course};
 };
 
-const updateCourseSuccess = (course) => {
+export const updateCourseSuccess = (course) => {
   return {type: courseActionsTypes.SAVE_COURSE_SUCCESS, course};
 };
 
@@ -58,4 +54,4 @@ function deleteCourse(course){
   };  
 }
 
-export { createCourse, loadCoursesSuccess, loadCourses, saveCourse, deleteCourse };
+export { loadCoursesSuccess, loadCourses, saveCourse, deleteCourse };
