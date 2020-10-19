@@ -14,7 +14,7 @@ module.exports = {
 	entry: './src/index',
 	output: { // since production mode webpack generate physcially files
 		path : path.resolve(__dirname, "build"),
-		publicPath: '/',
+		publicPath: "/",
 		filename: 'bundle.js'
 	},
 	plugins :[ // enhance webpack power
@@ -29,8 +29,8 @@ module.exports = {
     }),
     // this generate index.html & bundle for css+JS and add reference of bundle into index.html file dynamically as those changes with new hashes 
 		new HtmlWebpackPlugin({
-			template: 'src/index.html',
-			favicon: 'src/favicon.ico',
+			template: "src/index.html",
+			favicon: "src/favicon.ico",
       minify: {
         collapseWhiteSpace : true,
         keepClosingSlash : true,
@@ -59,15 +59,15 @@ module.exports = {
 				use: [
           MiniCssExtractPlugin.loader,
           {
-            loader : 'css-loader',
+            loader : "css-loader",
             options : {
               sourceMap : true
             }
           },
           {
-            loader : 'postcss-loader',
+            loader : "postcss-loader",
             options : {
-              plugins : () => [require('cssnano')],
+              plugins : () => [require("cssnano")],
               sourceMap : true
             }
           }

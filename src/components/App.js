@@ -1,12 +1,15 @@
 import React from 'react';
-import { Route,Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import HomePage from './home/HomePage';
 import AboutPage from './about/AboutPage';
 import Header from './common/header';
 import PageNotFound from './PageNotFound';
 import CoursePage from './courses/CoursePage';
+import AuthorPage from './authors/AuthorPage';
+import SaveAuthorPage  from './authors/SaveAuthorPage';
 import ManageCourse from './courses/ManageCourse';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,8 +22,11 @@ function App(){
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
-
         <Route  path="/courses" component={CoursePage} />
+        <Route  path="/authors" component={AuthorPage} />    
+        <Route  path="/categories" component={AuthorPage} />    
+        <Route  path="/author/:id" component={SaveAuthorPage} />        
+        <Route  path="/author" component={SaveAuthorPage} />         
         <Route  path="/about" component={AboutPage} />
         <Route  path="/course/:slug" component={ManageCourse} />
         <Route  path="/course" component={ManageCourse} />		

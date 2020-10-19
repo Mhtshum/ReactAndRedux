@@ -1,12 +1,13 @@
 import React from "react";
 import renderer from 'react-test-renderer';
 import CourseForm from '../CourseForm';
-import { courses, authors } from '../../../../tools/mockData';
+import { courses, authors, categories } from '../../../../tools/mockData';
 
 it("when saving passed is true then label should say 'Saving' ", () => {
   const tree = renderer.create(<CourseForm
     course={courses[0]}
     authors={authors}
+    categories={categories}
     onSave={jest.fn()}
     onChange={jest.fn()}
     saving
@@ -18,6 +19,7 @@ it("when saving passed is false then label should say 'Save' ", () => {
   const tree = renderer.create(<CourseForm
     course={courses[0]}
     authors={authors}
+    categories={categories}
     onSave={jest.fn()}
     onChange={jest.fn()}
     saving={false}

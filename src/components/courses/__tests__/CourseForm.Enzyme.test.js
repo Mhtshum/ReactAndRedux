@@ -6,6 +6,7 @@ const renderCourseForm = (args) => {
   const defaultProps = {
     course : {},
     authors : [], 
+    categories : [], 
     onSave : () => {}, 
     onChange : () => {}, 
     saving : false, 

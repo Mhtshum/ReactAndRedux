@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 const CourseForm = ({
   course, 
   authors, 
+  categories,
   onSave, 
   onChange, 
   saving = false, 
@@ -41,13 +42,22 @@ const CourseForm = ({
         onChange={onChange}
         error={errors.author}
       />
-      <TextInput 
-        name="category"
-        label="Category"
-        value={course.category}
+      
+      <SelectInput 
+        name="categoryId"
+        label="category"
+        value={course.categoryId || ''}
+        defaultOption="Select Category"
+        options = {
+          categories.map(c => { return {
+            value: c.id,
+            text: c.name
+          };})
+        }
         onChange={onChange}
         error={errors.category}
       />
+      
       <button className="btn btn-primary" disabled={saving} type="submit">{saving ? 'Saving ...' : 'Save'}</button>
     </form>
   );      
@@ -56,6 +66,7 @@ const CourseForm = ({
 CourseForm.propTypes = {
   course: PropTypes.object.isRequired,
   authors:PropTypes.array.isRequired,
+  categories:PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   errors: PropTypes.object,

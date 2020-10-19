@@ -4,7 +4,7 @@ import initialData from './initialData';
 export default function apiCallReducer(state = initialData.apiCallsInProgress, action){  
   if (action.type === BEGIN_API_CALL) {
     return state + 1;
-  }else if ( action.type === API_CALL_ERROR || isActionEnded(action.type)) {
+  }else if ( state > 0 &&  (action.type === API_CALL_ERROR || isActionEnded(action.type))) {
     return state - 1;
   }
   return state;

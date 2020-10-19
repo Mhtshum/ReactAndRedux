@@ -1,6 +1,4 @@
 import courseReducer from '../courseReducer';
-import { courses } from '../../../../tools/mockData';
-import { courseActionsTypes } from '../../actions/actionTypes';
 import * as courseActions from '../../actions/courseActions';
 
 describe("course reducer", () => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as courseActions from '../../redux/actions/courseActions';
 import * as authorActions from '../../redux/actions/authorActions';
+import * as categoryActions from '../../redux/actions/categoryActions';
 import Proptypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import CourseList from './CourseList';
@@ -32,7 +33,11 @@ class CoursePage extends React.Component
   };
    
   componentDidMount(){
-    const { actions, courses, authors } = this.props;
+    const { actions, courses, authors, categories } = this.props;
+    
+    if(categories.length ===0) {
+      actions.loadCategories();
+    }
     
     if(courses.length ===0) {
       this.refreshCourses();
@@ -75,9 +80,17 @@ CoursePage.proptypes = {
 function mapStateToProps(state){  
   return { 
     courses : 
-      state.authors.length === 0 
-        ? [] : state.courses.map(c=> {return {...c,authorName: state.authors.find(a=>a.id === c.authorId).name};}), 
+      state.authors.length === 0 || state.categories.length === 0 
+        ? [] : state.courses.map(c=> 
+        {
+          return { 
+            ...c,
+            authorName: state.authors.find(a=>a.id === c.authorId).name,
+            category : state.categories.find(ct=>ct.id === c.categoryId).name
+          };
+        }), 
     authors : state.authors,
+    categories : state.categories,
     isLoading : state.apiCallsInProgress > 0
   };	
 }
@@ -86,7 +99,8 @@ function mapDispatchToProps(dispatch){
   return {
     actions : { 
       courseActions : bindActionCreators(courseActions,dispatch),
-      loadAuthors : bindActionCreators(authorActions.loadAuthors,dispatch)	  
+      loadAuthors : bindActionCreators(authorActions.loadAuthors,dispatch),
+      loadCategories: bindActionCreators(categoryActions.loadCategories,dispatch)
     }  	  
   };	
 }

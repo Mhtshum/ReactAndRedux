@@ -51,15 +51,31 @@ server.post("/courses/", function(req, res, next) {
   }
 });
 
+server.post("/categories/", function(req, res, next) {
+  const error = validateCategory(req.body);
+  if (error) {
+    res.status(400).send(error);
+  } else {
+    next();
+  }
+});
+
+server.post("/authors/", function(req, res, next) {
+  const error = validateAuthor(req.body);
+  if (error) {
+    res.status(400).send(error);
+  } else {
+    next();
+  }
+});
+
 // Use default router
 server.use(router);
 
 // Start server
 const port = 3001;
-server.listen(port, () => {
-  console.log(`JSON Server is running on port ${port}`);
-});
-
+server.listen(port);
+console.log(`JSON Server is running on port ${port}`);
 // Centralized logic
 
 // Returns a URL friendly slug
@@ -73,6 +89,19 @@ function createSlug(value) {
 function validateCourse(course) {
   if (!course.title) return "Title is required.";
   if (!course.authorId) return "Author is required.";
-  if (!course.category) return "Category is required.";
+  if (!course.categoryId) return "Category is required.";
   return "";
 }
+
+function validateAuthor(author) {
+  if (!author.name) return "Name is required.";
+  return "";
+}
+
+
+function validateCategory(category) {
+  if (!category.name) return "Name is required.";
+  return "";
+}
+
+

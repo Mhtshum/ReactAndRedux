@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {loadCourses, saveCourse} from '../../redux/actions/courseActions';
 import {loadAuthors} from '../../redux/actions/authorActions';
+import {loadCategories} from '../../redux/actions/categoryActions';
 import PropTypes from 'prop-types';
 import CourseForm from './CourseForm';
 import { newCourse } from '../../../tools/mockData';
 import Spinner from '../common/Spinner';
 import { toast } from 'react-toastify';
 
-export const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCourse, history, ...props}) => { 
+export const ManageCourse = ({courses, authors, categories, loadCategories, loadAuthors, loadCourses, saveCourse, history, ...props}) => { 
   const [ course, setCourse ] = useState({...props.course});  
   const [ saving, setSaving ] = useState(false);    
   const [ errors, setErrors ] = useState({});  
@@ -17,7 +18,7 @@ export const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCo
   useEffect(()=> {    
     if(courses.length ===0) {
       loadCourses()
-        .catch(err=> alert(' Error in loading course '+err)); 
+        .catch(err=> alert(' Error in loading courses '+err)); 
     }
     else {
       // this will copy course passed in on props to state anytime new course is passed in
@@ -25,8 +26,13 @@ export const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCo
     }
     if(authors.length === 0) {   
       loadAuthors()
-        .catch(err=> alert(' Error in loading author '+err));   
-    }  
+        .catch(err=> alert(' Error in loading authors '+err));   
+    }
+    
+    if(categories.length === 0) {   
+      loadCategories()
+        .catch(err=> alert(' Error in loading categories '+err));   
+    }    
   }, [props.course]);  
   
   const saveChanges = (e) => {
@@ -45,11 +51,11 @@ export const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCo
   };
   
   const isCourseValid = () => {
-    const { title, authorId, category } = course;
+    const { title, authorId, categoryId } = course;
     let errors = {};
     if (!title) { errors.title = 'Title is required'; }
     if (!authorId) { errors.author = 'Author is required'; }
-    if (!category) { errors.category = 'Category is required'; }
+    if (!categoryId) { errors.category = 'Category is required'; }
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -57,17 +63,19 @@ export const ManageCourse = ({courses, authors, loadAuthors, loadCourses, saveCo
   const handleChange = (e) => {
     const { name, value } = e.target;
     // below method can not access name & value if it has not been destructure as on above line
+    alert(name);
+    alert(value);
     setCourse( prevCourse => ({
       ...prevCourse, 
       // following will set both properties based on input names for authorId & category
-      [name] : name === 'authorId' ? parseInt(value, 10) : value
+      [name] : name.indexOf('Id') > 0 ? parseInt(value, 10) : value
     }));
   };
   
   return (
-    authors.length === 0 || courses.length === 0
+    authors.length === 0 || courses.length === 0 || categories.length === 0
       ? <Spinner /> 
-      : <CourseForm onChange={handleChange} course={course} errors={errors} authors={authors} saving={saving} onSave={saveChanges} />
+      : <CourseForm onChange={handleChange} course={course} errors={errors} authors={authors} categories={categories} saving={saving} onSave={saveChanges} />
     
   );      
 };
@@ -91,6 +99,7 @@ function mapsStateToProps(state, ownProps){
   return { 
     courses : state.courses, 
     authors : state.authors,
+    categories : state.categories,
     course: displayCourse
   };    
 }
@@ -99,7 +108,8 @@ function mapsStateToProps(state, ownProps){
 const mapDispatchToProps = {
   loadCourses,
   saveCourse,
-  loadAuthors     
+  loadAuthors,
+  loadCategories  
 };
 
 // here via connect we are passing boher state & actions its like injection into the Presentation component (defined aboue )
