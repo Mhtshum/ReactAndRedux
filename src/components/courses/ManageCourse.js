@@ -63,8 +63,6 @@ export const ManageCourse = ({courses, authors, categories, loadCategories, load
   const handleChange = (e) => {
     const { name, value } = e.target;
     // below method can not access name & value if it has not been destructure as on above line
-    alert(name);
-    alert(value);
     setCourse( prevCourse => ({
       ...prevCourse, 
       // following will set both properties based on input names for authorId & category
@@ -86,6 +84,7 @@ ManageCourse.propTypes = {
   authors:PropTypes.array.isRequired,
   loadCourses: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
+  loadCategories: PropTypes.func.isRequired,
   history: PropTypes.object
 };
 

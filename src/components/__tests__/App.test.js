@@ -9,10 +9,9 @@ it("App has '/author' route", () => {
   expect(routeArray).toHaveLength(2);
 });
 
-
 it("App has '/category' route", () => {  
   const wrapper = shallow(<App/>);
-  const routeArray = wrapper.find('Route').filterWhere((item) => item.prop('path') === '/categories' );    
+  const routeArray = wrapper.find('Route').filterWhere((item) => item.prop('path') === '/categories');    
   expect(routeArray).toHaveLength(1);
   /*
   expect(wrapper.find('Route')).toEqual(          // 1
@@ -20,6 +19,5 @@ it("App has '/category' route", () => {
       expect.objectContaining({ path : '/categories'})
     ])
   ); 
-  */
-  
+  */  
 });
