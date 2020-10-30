@@ -10,11 +10,10 @@
     "test" : "jest --watch",
     "test:ci" : "jest",
     "clean:prodbuild" : "rimraf /home/remote_developer/chrx-server/build",     
-    "clean:build" : "rimraf ./build",     
-    "prebuild": "run-p clean:build clean:prodbuild",
-    "build": "webpack --config webpack.config.prod.js && cp -r build /home/remote_developer/chrx-server/",
-    "postbuild" : "cp -r build /home/remote_developer/chrx-server/",
-    "serve:build" : "run-p postbuild"    
+    "clean:build" : "rimraf ./build",         
+    "build": "webpack --config webpack.config.prod.js",    
+    "update:server":"cp -r build /home/remote_developer/chrx-server/",
+    "serve:build" : "run-p update:server"    
   },
   "jest" : {
     "testPathIgnorePatterns": ["\\\\node_modules\\\\"],

@@ -8,6 +8,7 @@ import PageNotFound from './PageNotFound';
 import CoursePage from './courses/CoursePage';
 import AuthorPage from './authors/AuthorPage';
 import CategoryPage from './categories/CategoryPage';
+import ManageCategory from './categories/ManageCategory';
 import SaveAuthorPage  from './authors/SaveAuthorPage';
 import ManageCourse from './courses/ManageCourse';
 
@@ -26,6 +27,8 @@ function App(){
         <Route  path="/courses" component={CoursePage} />
         <Route  path="/authors" component={AuthorPage} />    
         <Route  path="/categories" component={CategoryPage} />    
+        <Route  path="/category/:id" component={ManageCategory} />        
+        <Route  path="/category" component={ManageCategory} />        
         <Route  path="/author/:id" component={SaveAuthorPage} />        
         <Route  path="/author" component={SaveAuthorPage} />         
         <Route  path="/about" component={AboutPage} />

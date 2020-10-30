@@ -1,25 +1,34 @@
-import React,{ useEffect }from 'react';
+import React, { useEffect, useState }from 'react';
+import { Redirect }from 'react-router-dom';
 import { connect } from 'react-redux';
-import {loadCategories} from '../../redux/actions/categoryActions';
+import {loadCategories, deleteCategory} from '../../redux/actions/categoryActions';
 import Spinner from '../common/Spinner';
 import CategoriesList from './CategoriesList';
 
-export const CategoryPage = ({categories, loadCategories}) => {  
+export const CategoryPage = ({categories, loadCategories, deleteCategory}) => {  
+  const [isAddNew, setIsAddNew ] = useState(false);
+    
   useEffect(() => {
     if(categories.length === 0 ) {
       loadCategories()
         .catch(er=> alert(' Error in loading categories : ' + er));
     }
-  });
+  },{});
+  
+  const addNewClick = (e) => {
+    e.preventDefault();
+    setIsAddNew(true);
+  };
   
   return (
     categories.length === 0 
       ? <Spinner />
       :
       <>
+        {isAddNew && <Redirect to='/category' />}
         <h2>Categories</h2>
-        <button className="btn btn-primary" style={{marginBottom:20}}>Add Category</button>
-        <CategoriesList categories={categories}/>
+        <button className="btn btn-primary" onClick={addNewClick} style={{marginBottom:20}}>Add Category</button>
+        <CategoriesList categories={categories} onDelete={deleteCategory}/>
       </>
   ); 
 };
@@ -29,7 +38,7 @@ function mapStateToProps({categories}){
     : categories.map( c => { 
       return { 
         ...c , 
-        subCategory : c.subCategoryId === -1 ? '' 
+        subCategory : c.subCategoryId === -1 || c.subCategoryId === null ? '' 
           : categories.find(ct => ct.id === c.subCategoryId).name
       };       
     });
@@ -38,7 +47,8 @@ function mapStateToProps({categories}){
   };  
 }
 const mapDispatchToProps = {
-  loadCategories
+  loadCategories,
+  deleteCategory
 };  
 
 export default connect(mapStateToProps,mapDispatchToProps)(CategoryPage);

@@ -15,11 +15,11 @@ module.exports = {
 	output: { // since production mode webpack generate physcially files
 		path : path.resolve(__dirname, "build"),
 		publicPath: "/",
-		filename: 'bundle.js'
+		filename: 'bundle.[hash].js'
 	},
 	plugins :[ // enhance webpack power
     // will generate build report 
-    new webpackBundleAnalyzer.BundleAnalyzerPlugin({ analyzeMode : 'static' }),    
+    new webpackBundleAnalyzer.BundleAnalyzerPlugin({ analyzerMode : 'static' }),    
     // will only change when file changes via new hash each time which support file expire header for webserver and user will only load changes when css changes
     new MiniCssExtractPlugin({ filename : '[name].[contenthash].css' }),
 		new webpack.DefinePlugin({
@@ -40,7 +40,7 @@ module.exports = {
         removeComments : true,
         removeEmptyAttributes : true,
         removeRedundantAttributes : true,
-        removeStyleLinkTypeAttributes : true,        
+        removeStyleLinkTypeAttributes : true,
         removeWhiteSpaces : true,
         useShortDoctype : true
       }
@@ -74,5 +74,11 @@ module.exports = {
         ]
 			}			
 		]
-	}	
+	},	
+  optimization: {
+    splitChunks: {
+      // include all types of chunks
+      chunks: 'all'
+    }
+  }
 };

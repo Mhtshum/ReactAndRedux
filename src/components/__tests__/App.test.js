@@ -11,8 +11,12 @@ it("App has '/author' route", () => {
 
 it("App has '/category' route", () => {  
   const wrapper = shallow(<App/>);
-  const routeArray = wrapper.find('Route').filterWhere((item) => item.prop('path') === '/categories');    
+  const allRoutes = wrapper.find('Route');
+  const routeArray = allRoutes.filterWhere((item) => item.prop('path') === '/categories');    
+  const categoryArray = allRoutes.filterWhere((item) => item.prop('path') === '/category' || item.prop('path') === '/category/:id');    
+  
   expect(routeArray).toHaveLength(1);
+  expect(categoryArray).toHaveLength(2);
   /*
   expect(wrapper.find('Route')).toEqual(          // 1
     expect.arrayContaining([      // 2

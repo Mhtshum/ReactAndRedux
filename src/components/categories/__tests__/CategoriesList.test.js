@@ -21,5 +21,6 @@ describe('uts => category list',()=>{
     expect(wrapper.find('thead').length).toBe(1);    
     expect(wrapper.find('th').length).toBe(3);    
     expect(wrapper.find('tbody > tr').length>1).toBeTruthy();    
+//    expect(wrapper.find('Link').length>1).toBeTruthy();    
   });  
 });
