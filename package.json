@@ -1,5 +1,6 @@
 {
-  "name": "react-redux",
+  "note": "don't run this it is at ~/remote_developerhome/char",
+  "name": "react-redux",  
   "description": "React and Redux",
   "license": "MIT",  
   "scripts": { 
@@ -9,7 +10,7 @@
     "start:api" : "node tools/apiServer.js",
     "test" : "jest --watch",
     "test:ci" : "jest",
-    "clean:prodbuild" : "rimraf /home/remote_developer/chrx-server/build",     
+    "clean:prodbuild" : "rimraf /home/remote_developer/chrx-server/build",
     "clean:build" : "rimraf ./build",         
     "build": "webpack --config webpack.config.prod.js",    
     "update:server":"cp -r build /home/remote_developer/chrx-server/",
