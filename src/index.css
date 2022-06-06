@@ -1,8 +1,7 @@
-#app{
-    max-width: 850px;
-    margin: 0 auto;
+body{
+	background : steelBlue;	
+	font-color: black;
 }
-
 nav{
     padding: 20px 0 20px 0;
 }
