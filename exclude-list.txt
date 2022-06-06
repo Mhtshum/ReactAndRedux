@@ -5,3 +5,4 @@ LICENSE
 *.snap
 **\__snapshots__*\*
 exclude-list.txt
+exclude-list-back.txt

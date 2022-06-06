@@ -1,8 +1,26 @@
-#app{
-    max-width: 850px;
-    margin: 0 auto;
+body{
+	background : steelBlue;	
+	font-color: black;
 }
-
-nav{
-    padding: 20px 0 20px 0;
+.modal{
+	position:relative;
+	padding: 12px;
+	background: slateBlue;
+	width: 320px;
+	text-align : center;	
+	display : grid;
+}
+.click-catcher, .click-catcher--open {
+	position : fixed;
+	display: none;
+	justify-content : center;
+	align-items : center;
+	top: 0;
+	left: 0;
+	width : 100%;
+	height : 100%;	
+	background: rgba(0, 0, 0, 0.6);
+}
+.click-catcher--open {
+	display : flex;
 }
